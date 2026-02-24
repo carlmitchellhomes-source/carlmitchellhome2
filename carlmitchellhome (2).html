@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CarlMitchellHome | Real Estate</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --cream: #f8f4ee;
+    --warm-white: #fdfbf7;
+    --muted: #6b7280;
+    --border: rgba(201,168,76,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--warm-white);
+    color: var(--navy);
+    overflow-x: hidden;
+  }
+
+  /* ADA: Skip navigation link */
+  .skip-nav {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 0.75rem 1.5rem;
+    font-weight: 700;
+    font-size: 1rem;
+    z-index: 9999;
+    border-radius: 2px;
+    text-decoration: none;
+    transition: top 0.2s;
+  }
+  .skip-nav:focus { top: 1rem; }
+
+  /* ADA: Focus styles for all interactive elements */
+  a:focus, button:focus, input:focus, select:focus, textarea:focus {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  /* ADA: Improve muted color contrast (was #6b7280, now darker) */
+  :root {
+    --muted: #4b5563;
+  }
+
+  /* ADA: Visually hidden labels (accessible but not visible) */
+  .sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ADA: Ensure form inputs have visible focus */
+  .form-group input:focus,
+  .form-group select:focus,
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus {
+    outline: 3px solid var(--gold);
+    outline-offset: 0;
+    border-color: var(--gold);
+  }
+
+  /* ADA: Ensure buttons have visible focus */
+  .btn-primary:focus,
+  .video-mute-btn:focus,
+  .hamburger:focus,
+  .nav-links a:focus,
+  .mobile-menu a:focus {
+    outline: 3px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  /* ADA: Minimum touch target size 44x44px */
+  .hamburger { min-width: 44px; min-height: 44px; justify-content: center; align-items: center; }
+  .video-mute-btn { min-width: 44px; min-height: 44px; }
+  .nav-links a { padding: 0.5rem 0.25rem; }
+
+  /* ADA: Reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    .hero-video { display: none; }
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.4rem 4rem;
+    background: rgba(13,27,42,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .nav-realtor {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .realtor-text {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .realtor-text sup { font-size: 0.5rem; }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--gold);
+    letter-spacing: 0.04em;
+  }
+
+  .nav-logo span { color: white; }
+
+  .nav-samson {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    border-left: 1px solid var(--border);
+    padding-left: 1.5rem;
+    margin-left: -1rem;
+  }
+
+  .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+  .nav-links a {
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    background: var(--gold) !important;
+    color: var(--navy) !important;
+    padding: 0.6rem 1.4rem;
+    border-radius: 2px;
+    font-weight: 600 !important;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* VIDEO BACKGROUND */
+  .hero-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+  .hero-video.loaded { opacity: 1; }
+
+  .hero-video-overlay {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(
+      135deg,
+      rgba(13,27,42,0.82) 0%,
+      rgba(13,27,42,0.65) 50%,
+      rgba(13,27,42,0.75) 100%
+    );
+  }
+
+  /* Gold shimmer overlay */
+  .hero-video-overlay::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 70% at 70% 50%, rgba(201,168,76,0.07) 0%, transparent 60%);
+  }
+
+  /* Fallback gradient + house image if video fails */
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      linear-gradient(135deg, rgba(13,27,42,0.82) 0%, rgba(13,27,42,0.65) 100%),
+      url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&q=85&fit=crop') center/cover no-repeat;
+  }
+
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 2;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none;
+  }
+
+  /* Mute button */
+  .video-mute-btn {
+    position: absolute;
+    bottom: 2rem; right: 2rem;
+    z-index: 10;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    width: 2.8rem; height: 2.8rem;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background 0.3s;
+    backdrop-filter: blur(6px);
+  }
+  .video-mute-btn:hover { background: rgba(201,168,76,0.3); border-color: var(--gold); }
+
+  .hero-content {
+    position: relative;
+    z-index: 5;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 0 4rem;
+    display: grid;
+    grid-template-columns: 1fr 0.85fr 0.85fr;
+    gap: 2.5rem;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero-house-img-wrap {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-house-img {
+    width: 100%;
+    height: 380px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .hero-house-img-wrap:hover .hero-house-img { transform: scale(1.04); }
+
+  .hero-house-badge {
+    position: absolute;
+    bottom: 1rem; left: 1rem;
+    background: rgba(13,27,42,0.85);
+    border: 1px solid var(--border);
+    color: var(--gold);
+    padding: 0.4rem 0.9rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    backdrop-filter: blur(6px);
+    border-radius: 2px;
+  }
+
+  .hero-label {
+    display: inline-block;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--border);
+    padding: 0.4rem 1rem;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 300;
+    color: white;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-sub {
+    margin-top: 1.5rem;
+    color: rgba(255,255,255,0.6);
+    font-size: 1rem;
+    line-height: 1.7;
+    font-weight: 300;
+    max-width: 420px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.3rem;
+  }
+
+  /* LEAD FORM */
+  .hero-form-wrap {
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s forwards;
+  }
+
+  .hero-form {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    padding: 2.5rem;
+    backdrop-filter: blur(8px);
+  }
+
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: white;
+    margin-bottom: 0.4rem;
+  }
+
+  .form-subtitle {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1.8rem;
+  }
+
+  .form-group { margin-bottom: 1rem; }
+
+  .form-group input,
+  .form-group select {
+    width: 100%;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: white;
+    padding: 0.85rem 1rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+    border-radius: 2px;
+  }
+
+  .form-group input::placeholder { color: rgba(255,255,255,0.35); }
+
+  .form-group input:focus,
+  .form-group select:focus {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.05);
+  }
+
+  .form-group select option { background: var(--navy); color: white; }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .btn-primary {
+    width: 100%;
+    background: var(--gold);
+    color: var(--navy);
+    border: none;
+    padding: 1rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    margin-top: 0.5rem;
+    border-radius: 2px;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .form-note {
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.35);
+    margin-top: 0.8rem;
+  }
+
+  /* COLONIAL HOUSE FEATURE */
+  .house-feature {
+    padding: 5rem 4rem;
+    background: var(--cream);
+    border-bottom: 1px solid #e5e0d8;
+  }
+
+  .house-feature-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .house-img-wrap {
+    position: relative;
+    border-radius: 2px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(13,27,42,0.18);
+  }
+
+  .house-img {
+    width: 100%;
+    height: 420px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .house-img-wrap:hover .house-img { transform: scale(1.03); }
+
+  .house-img-badge {
+    position: absolute;
+    bottom: 1.2rem; left: 1.2rem;
+    background: var(--gold);
+    color: var(--navy);
+    padding: 0.45rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+  }
+
+  .house-cta {
+    display: inline-block;
+    margin-top: 1.8rem;
+    background: var(--navy);
+    color: white;
+    text-decoration: none;
+    padding: 0.85rem 1.8rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .house-cta:hover { background: #1a2f45; transform: translateY(-1px); }
+
+  @media (max-width: 900px) {
+    .house-feature { padding: 4rem 2rem; }
+    .house-feature-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .house-img { height: 280px; }
+  }
+
+  /* SERVICES */
+  .section {
+    padding: 7rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3.5vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--navy);
+    margin-bottom: 1.2rem;
+  }
+
+  .section-desc {
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.8;
+    max-width: 520px;
+    font-weight: 300;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px;
+    margin-top: 3.5rem;
+    background: #e5e0d8;
+  }
+
+  .service-card {
+    background: var(--warm-white);
+    padding: 2.5rem;
+    transition: background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+  }
+
+  .service-card:hover { background: var(--cream); }
+  .service-card:hover::after { transform: scaleX(1); }
+
+  .service-icon {
+    font-size: 1.8rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--navy);
+    margin-bottom: 0.7rem;
+  }
+
+  .service-desc {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* WHY US */
+  .why-section {
+    background: var(--navy);
+    padding: 7rem 4rem;
+  }
+
+  .why-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .why-section .section-title { color: white; }
+  .why-section .section-desc { color: rgba(255,255,255,0.55); }
+  .why-section .section-label { color: var(--gold); }
+
+  .why-list { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1.2rem; }
+
+  .why-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .why-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    min-width: 2.5rem;
+  }
+
+  .why-text h4 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 0.3rem;
+  }
+
+  .why-text p {
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .why-visual {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .why-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .why-card-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+  }
+
+  .why-card-label {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-top: 0.5rem;
+  }
+
+  .why-card.featured {
+    grid-column: span 2;
+    background: rgba(201,168,76,0.08);
+    border-color: rgba(201,168,76,0.4);
+  }
+
+  /* CONTACT SECTION */
+  .contact-section {
+    padding: 7rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 5rem;
+    align-items: start;
+  }
+
+  .contact-form {
+    background: var(--cream);
+    padding: 2.5rem;
+    border: 1px solid #e5e0d8;
+  }
+
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    width: 100%;
+    background: white;
+    border: 1px solid #e5e0d8;
+    color: var(--navy);
+    padding: 0.85rem 1rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    outline: none;
+    transition: border-color 0.3s;
+    margin-bottom: 1rem;
+    border-radius: 2px;
+  }
+
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus {
+    border-color: var(--gold);
+  }
+
+  .contact-form textarea { resize: vertical; min-height: 100px; }
+
+  .contact-form .btn-primary {
+    background: var(--navy);
+    color: white;
+  }
+
+  .contact-form .btn-primary:hover { background: #1a2f45; }
+
+  .contact-info { padding-top: 0.5rem; }
+  .contact-info .section-title { font-size: 2.5rem; }
+
+  .contact-details {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .contact-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .contact-icon {
+    width: 2.5rem; height: 2.5rem;
+    background: var(--cream);
+    border: 1px solid #e5e0d8;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .contact-item-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    margin-bottom: 0.2rem;
+  }
+
+  .contact-item-val {
+    font-size: 0.9rem;
+    color: var(--navy);
+    font-weight: 400;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    padding: 2.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+  }
+
+  .footer-copy {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-social { display: flex; align-items: center; }
+
+  .linkedin-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #0077b5;
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .linkedin-btn:hover { background: #005f8e; transform: translateY(-1px); }
+
+  .facebook-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #1877f2;
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .facebook-btn:hover { background: #0d65d9; transform: translateY(-1px); }
+
+  .footer-badges {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+  }
+
+  .footer-realtor {
+    border-right: 1px solid var(--border);
+    padding-right: 1.2rem;
+  }
+
+  .footer-eho {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .eho-text {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    line-height: 1.4;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* HAMBURGER MENU */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+    z-index: 200;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* MOBILE MENU OVERLAY */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(13,27,42,0.98);
+    z-index: 150;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    backdrop-filter: blur(12px);
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.8rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+    transition: color 0.3s;
+  }
+  .mobile-menu a:hover { color: var(--gold); }
+  .mobile-menu .mobile-cta {
+    background: var(--gold);
+    color: var(--navy) !important;
+    padding: 0.8rem 2.5rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem !important;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    margin-top: 1rem;
+  }
+
+  /* TABLET */
+  @media (max-width: 1024px) {
+    nav { padding: 1.2rem 2rem; }
+    .hero-content { padding: 0 2rem; gap: 2rem; }
+    .section { padding: 5rem 2rem; }
+    .why-inner { padding: 5rem 2rem; gap: 3rem; }
+    .contact-section { padding: 5rem 2rem; gap: 3rem; }
+    .house-feature { padding: 4rem 2rem; }
+    footer { padding: 2rem; }
+  }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav {
+      padding: 1rem 1.2rem;
+      flex-wrap: nowrap;
+    }
+
+    .nav-logo { font-size: 1.1rem; }
+    .nav-samson { display: block; font-size: 0.7rem; }
+    .realtor-text { display: none; }
+    .nav-realtor svg { width: 28px; height: 28px; }
+
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    /* HERO */
+    .hero { min-height: 100svh; }
+    .hero-content {
+      grid-template-columns: 1fr;
+      padding: 6rem 1.2rem 3rem;
+      gap: 2rem;
+    }
+    .hero-house-img { height: 220px; }
+    .hero h1 { font-size: 2.6rem; }
+    .hero-sub { font-size: 0.9rem; max-width: 100%; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    .stat-num { font-size: 1.8rem; }
+
+    /* LEAD FORM */
+    .hero-form { padding: 1.5rem; }
+    .form-row { grid-template-columns: 1fr; gap: 0; }
+    .form-title { font-size: 1.3rem; }
+
+    /* COLONIAL HOUSE */
+    .house-feature { padding: 3rem 1.2rem; }
+    .house-feature-inner { grid-template-columns: 1fr; gap: 1.5rem; }
+    .house-img { height: 240px; }
+    .house-feature-text .section-title { font-size: 1.8rem !important; }
+
+    /* SERVICES */
+    .section { padding: 3.5rem 1.2rem; }
+    .section-title { font-size: 1.9rem; }
+    .services-grid { grid-template-columns: 1fr; gap: 0; }
+    .service-card { padding: 1.8rem; }
+
+    /* WHY US */
+    .why-section { padding: 0; }
+    .why-inner {
+      grid-template-columns: 1fr;
+      padding: 3.5rem 1.2rem;
+      gap: 2.5rem;
+    }
+    .why-visual { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .why-card { padding: 1.2rem; }
+    .why-card-num { font-size: 2rem; }
+    .why-card.featured { grid-column: span 2; }
+
+    /* CONTACT */
+    .contact-section {
+      grid-template-columns: 1fr;
+      padding: 3.5rem 1.2rem;
+      gap: 2rem;
+    }
+    .contact-info .section-title { font-size: 1.9rem; }
+    .contact-form { padding: 1.5rem; }
+    .contact-form input,
+    .contact-form select,
+    .contact-form textarea { padding: 0.75rem 0.9rem; }
+
+    /* FOOTER */
+    footer {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1.8rem 1.2rem;
+      text-align: center;
+    }
+    .footer-copy { font-size: 0.7rem; }
+  }
+
+  /* SMALL PHONES */
+  @media (max-width: 380px) {
+    .hero h1 { font-size: 2.1rem; }
+    .nav-logo { font-size: 1rem; }
+    .hero-stats { gap: 1rem; }
+    .stat-num { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<a href="#main-content" class="skip-nav">Skip to main content</a>
+
+<!-- NAV -->
+<nav role="navigation" aria-label="Main navigation">
+  <div class="nav-logo-wrap">
+    <div class="nav-logo" aria-label="CarlMitchellHome - Home">Carl<span>Mitchell</span>Home</div>
+  </div>
+  <div class="nav-samson" aria-label="Brokerage: Samson Properties">Samson Properties</div>
+  <div class="nav-links" role="menubar">
+    <a href="#services" role="menuitem">Services</a>
+    <a href="#about" role="menuitem">About</a>
+    <a href="#contact" role="menuitem">Contact</a>
+    <a href="#contact" class="nav-cta" role="menuitem">Get Started</a>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+    <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Navigation menu" aria-modal="true">
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+  <a href="#contact" class="mobile-cta" onclick="closeMenu()">Get Started</a>
+</div>
+
+<!-- HERO -->
+<main id="main-content">
+<section class="hero" aria-label="Hero section - Find Your Perfect Home">
+  <!-- Fallback gradient -->
+  <div class="hero-bg" aria-hidden="true"></div>
+
+  <!-- Video Background -->
+  <video class="hero-video" autoplay muted loop playsinline id="heroVideo"
+    aria-hidden="true"
+    poster="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1920&q=85&fit=crop">
+    <source src="https://www.pexels.com/download/video/8101254/?fps=25.0&h=1080&w=1920" type="video/mp4">
+    <source src="https://videos.pexels.com/video-files/8101254/8101254-hd_1920_1080_25fps.mp4" type="video/mp4">
+  </video>
+  <div class="hero-video-overlay" aria-hidden="true"></div>
+  <div class="hero-grid" aria-hidden="true"></div>
+
+  <!-- Video controls (ADA: autoplay video must be pauseable) -->
+  <div class="video-controls" aria-label="Video controls">
+    <button class="video-mute-btn" id="muteBtn" aria-label="Unmute background video" onclick="toggleMute()">🔇</button>
+    <button class="video-mute-btn" id="pauseBtn" aria-label="Pause background video" onclick="togglePause()" style="margin-left:0.5rem;">⏸</button>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="hero-label">Trusted Real Estate Partner</div>
+      <h1>Find Your <em>Perfect</em><br>Home Today</h1>
+      <p class="hero-sub">Carl Mitchell brings decades of expertise to help you buy, sell, or invest in real estate — with personalized service and proven results.</p>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">100+</div>
+          <div class="stat-label">Homes Sold</div>
+        </div>
+        <div>
+          <div class="stat-num">15+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div>
+          <div class="stat-num">98%</div>
+          <div class="stat-label">Client Satisfaction</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-house-img-wrap">
+      <img
+        src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=85&fit=crop"
+        alt="Beautiful Home"
+        class="hero-house-img"
+        onerror="this.src='https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=85&fit=crop'"
+      >
+      <div class="hero-house-badge">Your Dream Home Awaits</div>
+    </div>
+
+    <div class="hero-form-wrap">
+      <form class="hero-form" action="https://formspree.io/f/mqedyzyr" method="POST" aria-label="Free consultation request form" novalidate>
+        <div class="form-title">Let's Connect</div>
+        <div class="form-subtitle">Free consultation — no obligation</div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="hero-first" class="sr-only">First Name (required)</label>
+            <input type="text" id="hero-first" name="first_name" placeholder="First Name" required aria-required="true" autocomplete="given-name">
+          </div>
+          <div class="form-group">
+            <label for="hero-last" class="sr-only">Last Name (required)</label>
+            <input type="text" id="hero-last" name="last_name" placeholder="Last Name" required aria-required="true" autocomplete="family-name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="hero-email" class="sr-only">Email Address (required)</label>
+          <input type="email" id="hero-email" name="email" placeholder="Email Address" required aria-required="true" autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="hero-phone" class="sr-only">Phone Number</label>
+          <input type="tel" id="hero-phone" name="phone" placeholder="Phone Number" autocomplete="tel">
+        </div>
+        <div class="form-group">
+          <label for="hero-intent" class="sr-only">I am looking to</label>
+          <select id="hero-intent" name="intent" aria-label="I am looking to">
+            <option value="" disabled selected>I'm looking to...</option>
+            <option>Buy a Home</option>
+            <option>Sell a Home</option>
+            <option>Invest in Property</option>
+            <option>Just Exploring</option>
+          </select>
+        </div>
+        <button type="submit" class="btn-primary">Request Free Consultation →</button>
+        <div class="form-note" aria-live="polite">🔒 Your info is safe. No spam, ever.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- COLONIAL HOUSE FEATURE PHOTO -->
+<section class="house-feature">
+  <div class="house-feature-inner">
+    <div class="house-img-wrap">
+      <img
+        src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=1200&q=80&fit=crop"
+        alt="Modern Colonial Home"
+        class="house-img"
+        onerror="this.src='https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=1200&q=80&fit=crop'"
+      >
+      <div class="house-img-badge">
+        <span>Modern Living</span>
+      </div>
+    </div>
+    <div class="house-feature-text">
+      <div class="section-label">Modern Living</div>
+      <div class="section-title" style="font-size:2.2rem;">Contemporary Homes<br>For Modern Life</div>
+      <div class="section-desc">From sleek open-concept layouts to smart home features and energy-efficient design — Carl Mitchell helps you find a home that fits the way you live today and tomorrow.</div>
+      <a href="#contact" class="house-cta">Find Your Home →</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section">
+    <div class="section-label">What We Offer</div>
+    <div class="section-title">Full-Service Real Estate<br>You Can Count On</div>
+    <div class="section-desc">From your first showing to closing day, CarlMitchellHome provides expert guidance every step of the way.</div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🏡</div>
+        <div class="service-name">Home Buying</div>
+        <div class="service-desc">Find your dream home with expert market knowledge, neighborhood insights, and strong negotiation to get the best deal.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📈</div>
+        <div class="service-name">Home Selling</div>
+        <div class="service-desc">Maximize your sale price with strategic pricing, professional marketing, and a proven track record of fast closings.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💼</div>
+        <div class="service-name">Investment Properties</div>
+        <div class="service-desc">Grow your portfolio with smart investment guidance — from rental properties to fix-and-flip opportunities.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <div class="service-name">Market Analysis</div>
+        <div class="service-desc">Get detailed comparable market analyses and real-time data to make informed, confident decisions.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🤝</div>
+        <div class="service-name">First-Time Buyers</div>
+        <div class="service-desc">Navigating the market for the first time? We'll walk you through every step — from financing to keys in hand.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔑</div>
+        <div class="service-name">Relocation Services</div>
+        <div class="service-desc">Moving to a new area? We'll help you find the right neighborhood, school district, and home that fits your life.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="about" class="why-section">
+  <div class="why-inner">
+    <div>
+      <div class="section-label">Why Carl Mitchell</div>
+      <div class="section-title">A Name You Can<br>Trust in Real Estate</div>
+      <div class="section-desc">Carl Mitchell has built a reputation on integrity, market expertise, and genuinely caring about his clients' outcomes — not just commissions.</div>
+      <div class="why-list">
+        <div class="why-item">
+          <div class="why-num">01</div>
+          <div class="why-text">
+            <h4>Local Market Expert</h4>
+            <p>Deep knowledge of neighborhoods, pricing trends, and off-market opportunities you won't find anywhere else.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">02</div>
+          <div class="why-text">
+            <h4>Always Responsive</h4>
+            <p>In real estate, timing is everything. Carl is always available — nights, weekends, whenever you need answers.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">03</div>
+          <div class="why-text">
+            <h4>Results-Driven</h4>
+            <p>Homes sell faster and buyers win more offers with Carl in their corner. The numbers speak for themselves.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="why-visual">
+      <div class="why-card">
+        <div class="why-card-num">100+</div>
+        <div class="why-card-label">Happy Clients</div>
+      </div>
+      <div class="why-card">
+        <div class="why-card-num">30</div>
+        <div class="why-card-label">Days Avg. to Offer</div>
+      </div>
+      <div class="why-card featured">
+        <div class="why-card-num">⭐ 5.0</div>
+        <div class="why-card-label">Average Client Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" aria-labelledby="contact-heading">
+  <div class="contact-section">
+    <div class="contact-info">
+      <div class="section-label">Get In Touch</div>
+      <h2 id="contact-heading" class="section-title">Ready to Make<br>Your Move?</h2>
+      <div class="section-desc">Whether you're buying, selling, or just exploring your options — reach out today. A free consultation costs you nothing.</div>
+      <div class="contact-details">
+        <div class="contact-item">
+          <div class="contact-icon" aria-hidden="true">📞</div>
+          <div>
+            <div class="contact-item-label">Phone</div>
+            <div class="contact-item-val"><a href="tel:+12408328543" aria-label="Call (240) 832-8543">(240) 832-8543</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon" aria-hidden="true">✉️</div>
+          <div>
+            <div class="contact-item-label">Email</div>
+            <div class="contact-item-val" id="public-email">carlmitchellhomes&#64;gmail&#46;com</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon" aria-hidden="true">📍</div>
+          <div>
+            <div class="contact-item-label">Office</div>
+            <div class="contact-item-val">16701 Melford Blvd #100 Bowie, MD 20175</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form class="contact-form" action="https://formspree.io/f/mqedyzyr" method="POST" aria-label="Contact form" novalidate>
+      <div class="form-title" style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--navy);margin-bottom:0.3rem;">Send a Message</div>
+      <div class="form-subtitle" style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem;">We'll respond within 24 hours.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div>
+          <label for="contact-first" class="sr-only">First Name (required)</label>
+          <input type="text" id="contact-first" name="first_name" placeholder="First Name" required aria-required="true" autocomplete="given-name">
+        </div>
+        <div>
+          <label for="contact-last" class="sr-only">Last Name (required)</label>
+          <input type="text" id="contact-last" name="last_name" placeholder="Last Name" required aria-required="true" autocomplete="family-name">
+        </div>
+      </div>
+      <label for="contact-email" class="sr-only">Email Address (required)</label>
+      <input type="email" id="contact-email" name="email" placeholder="Email Address" required aria-required="true" autocomplete="email">
+      <label for="contact-phone" class="sr-only">Phone Number</label>
+      <input type="tel" id="contact-phone" name="phone" placeholder="Phone Number" autocomplete="tel">
+      <label for="contact-inquiry" class="sr-only">How can we help?</label>
+      <select id="contact-inquiry" name="inquiry" aria-label="How can we help?">
+        <option value="" disabled selected>How can we help?</option>
+        <option>Buying a Home</option>
+        <option>Selling a Home</option>
+        <option>Investment Property</option>
+        <option>General Inquiry</option>
+      </select>
+      <label for="contact-message" class="sr-only">Your message</label>
+      <textarea id="contact-message" name="message" placeholder="Tell us more about what you're looking for..."></textarea>
+      <button type="submit" class="btn-primary" style="background:var(--navy);color:white;width:100%;padding:1rem;border:none;font-family:'Outfit',sans-serif;font-size:0.9rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;border-radius:2px;">Send Message →</button>
+    </form>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">CarlMitchellHome</div>
+  <div class="footer-copy">© 2024 CarlMitchellHome. All rights reserved. Licensed Real Estate Professional.</div>
+  <a href="https://www.facebook.com/CarlMitchellHome" target="_blank" rel="noopener noreferrer" class="facebook-btn" title="Follow on Facebook">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
+      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+    </svg>
+    <span>Facebook</span>
+  </a>
+<div class="footer-badges">
+    <div class="nav-realtor footer-realtor" title="REALTOR®">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="36" height="36">
+        <rect width="60" height="60" rx="4" fill="#003087"/>
+        <text x="50%" y="54%" dominant-baseline="middle" text-anchor="middle"
+          font-family="Georgia, serif" font-size="36" font-weight="bold" fill="white">R</text>
+      </svg>
+      <span class="realtor-text">REALTOR<sup>®</sup></span>
+    </div>
+    <div class="footer-eho" title="Equal Housing Opportunity">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="48" height="48" aria-label="Equal Housing Opportunity">
+        <polygon points="40,8 72,36 66,36 66,70 14,70 14,36 8,36" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="3.5" stroke-linejoin="round"/>
+        <rect x="31" y="48" width="18" height="22" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="3"/>
+        <line x1="22" y1="82" x2="58" y2="82" stroke="rgba(255,255,255,0.6)" stroke-width="2.5"/>
+        <line x1="22" y1="87" x2="58" y2="87" stroke="rgba(255,255,255,0.6)" stroke-width="2.5"/>
+      </svg>
+      <div class="eho-text">Equal Housing<br>Opportunity</div>
+    </div>
+  </div>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Make email clickable
+  const emailEl = document.getElementById('public-email');
+  if (emailEl) {
+    const addr = 'carlmitchellhomes@gmail.com';
+    emailEl.innerHTML = '<a href="mailto:' + addr + '" style="color:var(--navy);text-decoration:none;">' + addr + '</a>';
+  }
+
+  function toggleMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const btn = document.getElementById('hamburger');
+    const isOpen = menu.classList.toggle('open');
+    btn.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+    btn.setAttribute('aria-label', isOpen ? 'Close navigation menu' : 'Open navigation menu');
+    document.body.style.overflow = isOpen ? 'hidden' : '';
+  }
+
+  function closeMenu() {
+    const menu = document.getElementById('mobileMenu');
+    const btn = document.getElementById('hamburger');
+    menu.classList.remove('open');
+    btn.classList.remove('open');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', 'Open navigation menu');
+    document.body.style.overflow = '';
+  }
+
+  // Close mobile menu on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeMenu();
+  });
+
+  // Fade in video once it's loaded enough to play
+  const video = document.getElementById('heroVideo');
+  const muteBtn = document.getElementById('muteBtn');
+
+  video.addEventListener('canplay', () => {
+    video.classList.add('loaded');
+  });
+
+  // If video loads slowly, still show after 2s
+  setTimeout(() => video.classList.add('loaded'), 2000);
+
+  function toggleMute() {
+    video.muted = !video.muted;
+    muteBtn.textContent = video.muted ? '🔇' : '🔊';
+    muteBtn.setAttribute('aria-label', video.muted ? 'Unmute background video' : 'Mute background video');
+  }
+
+  function togglePause() {
+    const pauseBtn = document.getElementById('pauseBtn');
+    if (video.paused) {
+      video.play();
+      pauseBtn.textContent = '⏸';
+      pauseBtn.setAttribute('aria-label', 'Pause background video');
+    } else {
+      video.pause();
+      pauseBtn.textContent = '▶';
+      pauseBtn.setAttribute('aria-label', 'Play background video');
+    }
+  }
+
+  // Pause video when out of view for performance
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { video.play(); }
+      else { video.pause(); }
+    });
+  }, { threshold: 0.1 });
+  observer.observe(document.querySelector('.hero'));
+</script>
+
+<!-- TIDIO LIVE CHAT -->
+<script src="//code.tidio.co/orjecfmnrile4wdqmxcbroyfsiht5ctj.js" async></script>
+</body>
+</html>
